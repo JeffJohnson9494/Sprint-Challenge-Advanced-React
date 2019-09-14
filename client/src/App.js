@@ -10,10 +10,8 @@ class App extends React.Component{
     }
   }
   componentDidMount(){
-    
-    fetch('https://localhost:5000/api/players')
-    .then(res=>res.json())
-    .then(names=>this.setState({data:names})).catch(err=>console.log('error'));
+    //should be setting the data into my state
+    fetch('https://localhost:5000/api/players').then(res=>res.json()).then(names=>this.setState({data:names})).catch(err=>console.log('error'));
   }
   render(){
     return(
@@ -22,7 +20,7 @@ class App extends React.Component{
           <Navbar/>
         </div>
         <div className="Cards">
-          <h1>{console.log(this.state.name)}</h1>
+        {/*mapping data into my playerCard*/}
           {this.state.data.map(players=><PlayerCard players={players}/>)}
         </div>
       </div>
