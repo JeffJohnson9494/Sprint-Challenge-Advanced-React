@@ -1,17 +1,18 @@
 import React from 'react';
-import PlayerCard from './components/PlayerCard';
+import Players from './components/Players';
 import Navbar from './components/Navbar';
 
 class App extends React.Component{
-  constructor(){
-    super()
-    this.state={
-      data:[]
-    }
+  // setting state i originally had this in a constructor
+  state={
+    data:[],
   }
   componentDidMount(){
-    //should be setting the data into my state
-    fetch('https://localhost:5000/api/players').then(res=>res.json()).then(names=>this.setState({data:names})).catch(err=>console.log('error'));
+    //fetching the data from the api and setting it to the state
+    fetch('https://localhost:5000/api/players')
+    .then(res=>res.json())
+    .then(res=>this.setState({data:res}))
+    .catch(err=>console.log(err));
   }
   render(){
     return(
@@ -20,8 +21,9 @@ class App extends React.Component{
           <Navbar/>
         </div>
         <div className="Cards">
-        {/*mapping data into my playerCard*/}
-          {this.state.data.map(players=><PlayerCard players={players}/>)}
+        {/*this was mapping data into my playerCard 
+            now it is just dropping data down into my player component*/}
+          <Players data={this.state.data}/>
         </div>
       </div>
     )
