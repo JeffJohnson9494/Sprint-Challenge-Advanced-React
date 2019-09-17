@@ -1,6 +1,7 @@
 import React from 'react';
-import Players from './components/Players';
+import PlayerCard from './components/PlayerCard';
 import Navbar from './components/Navbar';
+import axios from 'axios';
 
 class App extends React.Component{
   // setting state i originally had this in a constructor
@@ -9,21 +10,23 @@ class App extends React.Component{
   }
   componentDidMount(){
     //fetching the data from the api and setting it to the state
-    fetch('https://localhost:5000/api/players')
-    .then(res=>res.json())
-    .then(res=>this.setState({data:res}))
+    axios.get('http://localhost:5000/api/players')
+    .then(res=>this.setState({data:res.data}))
     .catch(err=>console.log(err));
+    
   }
   render(){
     return(
+      
       <div>
+        {console.log(this.state.data)}
         <div className="Nav">
           <Navbar/>
         </div>
+        
         <div className="Cards">
-        {/*this was mapping data into my playerCard 
-            now it is just dropping data down into my player component*/}
-          <Players data={this.state.data}/>
+        {this.state.data.map(player =>
+          <PlayerCard key={player.id} data={player} />)}
         </div>
       </div>
     )
